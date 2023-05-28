@@ -6,11 +6,17 @@ import Home from "../pages/Home/Home/Home";
 import Menu from "../pages/Menu/Menu/Menu";
 import Order from "../pages/Order/Order/Order";
 import Login from "../pages/Login/Login";
+import SignUp from "../pages/SignUp/SignUp";
+import Secred from "../pages/shared/Secred/Secred";
+import PrivateRouter from "./PrivateRouter";
+import ErrorPage from "../ErrorPage";
 
  export const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
+      errorElement:<ErrorPage></ErrorPage>,
+      
       children:[
         {
             path:'/',
@@ -27,7 +33,16 @@ import Login from "../pages/Login/Login";
         {
           path:'login',
           element:<Login></Login>
-        }
+        },
+        {
+          path:'signup',
+          element:<SignUp></SignUp>
+        },
+        {
+          path:'secred',
+          element:<PrivateRouter><Secred></Secred></PrivateRouter>
+        },
+       
       ]
     },
   ]);
