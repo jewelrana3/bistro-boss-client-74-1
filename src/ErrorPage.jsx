@@ -1,9 +1,11 @@
 
-// import errorImg from '../src/assets/error/404.gif'
+import { Link } from 'react-router-dom';
+import errorImg from '../src/assets/error/404.gif'
 const ErrorPage = () => {
     return (
         <div>
-           {/* <img src={errorImg} alt="" /> */}
+           <img src={errorImg} alt="" />
+           <Link to='/'>Go To Back</Link>
         </div>
     );
 };

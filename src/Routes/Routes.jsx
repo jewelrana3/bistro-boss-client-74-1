@@ -10,6 +10,9 @@ import SignUp from "../pages/SignUp/SignUp";
 import Secred from "../pages/shared/Secred/Secred";
 import PrivateRouter from "./PrivateRouter";
 import ErrorPage from "../ErrorPage";
+import DashBoard from "../Layout/DashBoard";
+import MyCart from "../pages/DashBoard/MyCart/MyCart";
+// import MyCart from "../pages/DashBoard/MyCart/MyCart";
 
  export const router = createBrowserRouter([
     {
@@ -45,4 +48,14 @@ import ErrorPage from "../ErrorPage";
        
       ]
     },
+    {
+      path:'dashboard',
+      element:<DashBoard></DashBoard>,
+      children:[
+        {
+          path:'mycart',
+          element:<MyCart></MyCart>
+        }
+      ]
+    }
   ]);

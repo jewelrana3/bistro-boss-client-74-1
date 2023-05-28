@@ -15,8 +15,8 @@ const OrderCard = ({item}) => {
 
     const handleToCart=item=>{
         console.log(item)
-        if(user && user.email){
-            const cartItem = {menuItem : _id,image,price,name,email:user.email}
+        if(user && user?.email){
+            const cartItem = {menuItem : _id,image,price,name,email:user?.email}
             fetch('http://localhost:4000/carts',{
                 method:"POST",
                 headers:{
