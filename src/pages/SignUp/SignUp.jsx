@@ -6,38 +6,49 @@ import { AuthContext } from "../../provider/AuthProvider";
 import Swal from 'sweetalert2'
 
 const SignUp = () => {
-    const { register, handleSubmit,reset, formState: { errors } } = useForm();
-    const {createUser,profileUser} = useContext(AuthContext)
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { createUser, profileUser } = useContext(AuthContext)
     const navigate = useNavigate();
 
     const onSubmit = data => {
         console.log(data)
-        createUser(data.email,data.password)
-        .then(result=>{
-            const user = result.user;
-            console.log(user)
-            profileUser(data.name,data.photo)
-            .then(()=>{
-                console.log('update profile')
-                reset()
-                Swal.fire({
-                    position: 'top-center',
-                    icon: 'success',
-                    title: 'Your work has been saved',
-                    showConfirmButton: false,
-                    timer: 1500
-                   
-                  })
-                  navigate('/')
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+                profileUser(data.name, data.photoURL)
+                    .then(() => {
+                        const saveUser = {name:data.name,email:data.email}
+                        fetch('http://localhost:4000/users',{
+                            method:'POST',
+                            headers:{
+                                'content-type':'application/json'
+                            },
+                            body:JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset()
+                                    Swal.fire({
+                                        position: 'top-center',
+                                        icon: 'success',
+                                        title: 'Your work has been saved',
+                                        showConfirmButton: false,
+                                        timer: 1500
+
+                                    })
+                                    navigate('/')
+                                }
+                            })
+
+                    })
+                    .catch(error => console.log(error))
             })
-            .catch(error=>console.log(error))
-        }).catch(error=>{
-            console.log(error)
-        })
     };
     return (
         <>
-        <Helmet>
+            <Helmet>
                 <title>Bistro Boss | Sign Up</title>
             </Helmet>
             <div className="hero min-h-screen bg-base-200">

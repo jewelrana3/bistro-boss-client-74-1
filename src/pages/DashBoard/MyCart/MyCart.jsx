@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 
 const MyCart = () => {
     const [cart,refetch] = useCart()
-    const total = cart.reduce((sum, item) => item.price + sum, 0)
+    console.log('cart',cart)
+    // const total = cart.reduce((sum, item) => item.price + sum, 0);
     const handleDelete = item => {
         Swal.fire({
             title: 'Are you sure?',
@@ -41,7 +42,7 @@ const MyCart = () => {
             </Helmet>
             <div className="flex gap-64 mb-4">
                 <h3 className="text-3xl">cart items:{cart.length}</h3>
-                <h3 className="text-3xl">cart items:{total}</h3>
+                <h3 className="text-3xl">cart items:{'lll'}</h3>
                 <button className="btn btn-error">PAY</button>
             </div>
             <div className="overflow-x-auto w-full">

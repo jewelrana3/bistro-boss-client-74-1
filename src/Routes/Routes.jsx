@@ -12,13 +12,15 @@ import PrivateRouter from "./PrivateRouter";
 import ErrorPage from "../ErrorPage";
 import DashBoard from "../Layout/DashBoard";
 import MyCart from "../pages/DashBoard/MyCart/MyCart";
+import AllUsers from "../pages/DashBoard/AllUsers/AllUsers";
+import AddItem from "../pages/DashBoard/AddItem/AddItem";
 // import MyCart from "../pages/DashBoard/MyCart/MyCart";
 
  export const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
-      errorElement:<ErrorPage></ErrorPage>,
+      // errorElement:<ErrorPage></ErrorPage>,
       
       children:[
         {
@@ -50,11 +52,19 @@ import MyCart from "../pages/DashBoard/MyCart/MyCart";
     },
     {
       path:'dashboard',
-      element:<DashBoard></DashBoard>,
+      element:<PrivateRouter><DashBoard></DashBoard></PrivateRouter>,
       children:[
         {
           path:'mycart',
           element:<MyCart></MyCart>
+        },
+        {
+          path:'allusers',
+          element:<AllUsers></AllUsers>
+        },
+        {
+          path:'additem',
+          element:<AddItem></AddItem>
         }
       ]
     }
