@@ -14,13 +14,14 @@ import DashBoard from "../Layout/DashBoard";
 import MyCart from "../pages/DashBoard/MyCart/MyCart";
 import AllUsers from "../pages/DashBoard/AllUsers/AllUsers";
 import AddItem from "../pages/DashBoard/AddItem/AddItem";
+import AdminRoutes from "./AdminRoutes";
 // import MyCart from "../pages/DashBoard/MyCart/MyCart";
 
  export const router = createBrowserRouter([
     {
       path: "/",
       element: <Main></Main>,
-      // errorElement:<ErrorPage></ErrorPage>,
+      errorElement:<ErrorPage></ErrorPage>,
       
       children:[
         {
@@ -64,7 +65,7 @@ import AddItem from "../pages/DashBoard/AddItem/AddItem";
         },
         {
           path:'additem',
-          element:<AddItem></AddItem>
+          element:<AdminRoutes><AddItem></AddItem></AdminRoutes>
         }
       ]
     }
