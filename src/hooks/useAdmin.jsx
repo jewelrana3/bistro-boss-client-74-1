@@ -7,8 +7,8 @@ const useAdmin=()=>{
     const [axiosSecure] = useAxiosSecure();
     // use axios secure and react query
     const { data: isAdmin, isLoading: isAdminLoading} = useQuery({
-        queryKey:['',user?.email],
-
+        queryKey:['isAdmin',user?.email],
+        enabled:!!user?.email && !!localStorage.getItem("access-token"),
         queryFn: async ()=>{
             const res = await axiosSecure.get(`/users/admin/${user?.email}`)
             return res.data.admin;

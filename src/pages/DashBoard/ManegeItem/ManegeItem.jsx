@@ -1,13 +1,16 @@
-import { Helmet } from "react-helmet-async";
-import useCart from "../../../hooks/useCart";
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash } from "react-icons/fa";
+import SectionTitle from "../../../components/SectionTitle/SectionTitle";
+import useMenu from "../../../hooks/useMenu";
 import Swal from "sweetalert2";
-import { Link } from "react-router-dom";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
-const MyCart = () => {
-    const [cart,refetch] = useCart()
-    console.log('cart',cart)
-    // const total = cart.reduce((sum, item) => item.price + sum, 0);
+
+const ManegeItem = () => {
+    const [menu, , refetch] = useMenu();
+    const [axiosSecure] = useAxiosSecure();
+
+   
+
     const handleDelete = item => {
         Swal.fire({
             title: 'Are you sure?',
@@ -19,12 +22,11 @@ const MyCart = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:4000/carts/${item._id}`, {
-                    method: 'DELETE'
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.deletedCount > 0) {
+
+                axiosSecure.delete(`/menu/${item._id}`)
+                    .then(res => {
+                        console.log('deleted res', res.data);
+                        if (res.data.deletedCount > 0) {
                             refetch();
                             Swal.fire(
                                 'Deleted!',
@@ -33,36 +35,32 @@ const MyCart = () => {
                             )
                         }
                     })
+
             }
         })
     }
+
     return (
-        <div className="w-full">
-            <Helmet>
-                <title>Bistro Boss | My Cart</title>
-            </Helmet>
-            <div className="flex gap-64 mb-4">
-                <h3 className="text-3xl">cart items:{cart.length}</h3>
-                <h3 className="text-3xl">cart items:{'lll'}</h3>
-                <Link to='/dashboard/payment'><button className="btn btn-error">PAY</button></Link>
-            </div>
+        <div className="w-full px-4 mt-6">
+            <SectionTitle className='w-full' heading='Manege All Items' subHeading='Harry up'></SectionTitle>
+            <h2 className="text-3xl">menage items side </h2>
+
             <div className="overflow-x-auto w-full">
                 <table className="table w-full">
                     {/* head */}
-                    <thead>
-                        <tr>
+                    <thead >
+                        <tr className=" w-full">
                             <th>#</th>
-                            <th>Food</th>
-                            <th>Name</th>
-                            <th>Price</th>
+                            <th>Image Name</th>
+                            <th>Item Name</th>
+                            <th>Peice </th>
                             <th>Action</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="w-full">
                         {
-                            cart.map((item,index) =>  <tr
-                            key={item._id}
-                            >
+                            menu.map((item, index) => <tr key={item._id}>
                                 <th>
                                     {index + 1}
                                 </th>
@@ -73,22 +71,30 @@ const MyCart = () => {
                                                 <img src={item.image} alt="Avatar Tailwind CSS Component" />
                                             </div>
                                         </div>
+                                        <div>
+
+
+                                        </div>
                                     </div>
                                 </td>
-                                <td>{item.name}</td>
+                                <td>
+                                    {item.name}
+                                </td>
                                 <td>${item.price}</td>
-                                <th>
-                                    <button onClick={()=>handleDelete(item)} className="btn btn-ghost text-white bg-red-400"><FaTrash></FaTrash></button>
-                                </th>
+                                <td>
+                                    <button className="btn btn-ghost btn-xs">details</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => handleDelete(item)} className="btn btn-ghost text-white bg-red-400"><FaTrash></FaTrash></button>
+                                </td>
                             </tr>)
                         }
-                       
+
                     </tbody>
-                    {/* foot */}
                 </table>
             </div>
         </div>
     );
 };
 
-export default MyCart;
+export default ManegeItem;
