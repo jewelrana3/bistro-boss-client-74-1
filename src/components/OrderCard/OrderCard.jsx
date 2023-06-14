@@ -17,7 +17,7 @@ const OrderCard = ({item}) => {
         console.log(item)
         if(user && user?.email){
             const cartItem = {menuItem : _id,image,price,name,email:user?.email}
-            fetch('http://localhost:4000/carts',{
+            fetch('https://bistro-boss-server-jewelrana3.vercel.app/carts',{
                 method:"POST",
                 headers:{
                     'content-type':'application/json'

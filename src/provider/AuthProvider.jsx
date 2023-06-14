@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
 
             // set and get token
             if (currentUser) {
-                axios.post('http://localhost:4000/jwt/', { email: currentUser.email })
+                axios.post('https://bistro-boss-server-jewelrana3.vercel.app/jwt/', { email: currentUser.email })
                     .then(data => {
                         if (data.data) {
                           
